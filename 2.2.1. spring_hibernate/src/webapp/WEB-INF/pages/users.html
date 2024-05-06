@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+    <style>
+        .user-container {
+            display: flex;
+            align-items: center; /* Центрирует элементы по вертикали */
+            margin-bottom: 10px; /* Добавляет отступ между пользователями */
+        }
+
+        .user-info {
+            margin-right: 10px; /* Добавляет отступ между информацией о пользователе и кнопкой */
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <th:block th:each="msg : ${users}">
+        <div class="user-container">
+            <div class="user-info">
+                <h2 th:text="${msg.getFirstName()} + ' ' + ${msg.getLastName()} + ' ' + ${msg.getEmail()}"></h2>
+            </div>
+            <form action="/remove" method="post">
+                <input type="hidden" name="userId" th:value="${msg.getId()}">
+                <input type="submit" value="remove">
+            </form>
+            <form action="/update" method="get">
+                <input type="hidden" name="userId" th:value="${msg.id}">
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </th:block>
+</div>
+
+<div>
+    <form action="/new" method="get">
+        <input type="submit" value="addUser" th:action="@{/new}">
+    </form>
+</div>
+
+</body>
+
+</html>
