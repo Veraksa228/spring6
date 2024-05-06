@@ -1,52 +1,32 @@
 package hiber.dao;
 
-import hiber.model.Car;
+
 import hiber.model.User;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class UserDaoImp implements UserDao {
+public class UserDaoImp {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
     public void add(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
-    @Override
-    public void addCar(Car user) {
-        sessionFactory.getCurrentSession().save(user);
+    public void removeUser(User user) {
+        entityManager.remove(user);
     }
 
-    @Override
-    public List<User> getUserByCar(String model, int series) {
-        return sessionFactory
-                .getCurrentSession()
-                .createQuery("FROM User u WHERE u.car.model = :model AND u.car.series = :series", User.class)
-                .setParameter("model", model)
-                .setParameter("series", series)
-                .getResultList();
-
+    public List<User> getUsers() {
+        return entityManager.createQuery("SELECT u FROM User u ", User.class).getResultList();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<User> listUsers() {
-        return sessionFactory
-                .getCurrentSession()
-                .createQuery("FROM User")
-                .getResultList();
-    }
+
 
 }
