@@ -36,9 +36,7 @@ public class UserDaoImp {
     }
     @Transactional
     public void updateUser(User updatedUser) {
-
         if (updatedUser.getId() != null) {
-
             User existingUser = entityManager.find(User.class, updatedUser.getId());
             if (existingUser != null) {
 

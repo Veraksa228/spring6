@@ -1,12 +1,10 @@
 package hiber.controller;
 
 import hiber.model.User;
-import hiber.service.UserService;
 import hiber.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +18,10 @@ public class controller {
     public void setUserService(UserServiceImp userService) {
         this.userService = userService;
     }
+
     @GetMapping("/")
-    public String index(){
-return "index";
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/users")
@@ -38,19 +37,21 @@ return "index";
 
     }
 
-    @PostMapping("/new" )
-    public String addUser(@ModelAttribute("user") User user,Model model) {
+    @PostMapping("/new")
+    public String addUser(@ModelAttribute("user") User user, Model model) {
         userService.add(user);
         return "redirect:/users";
     }
+
     @PostMapping("/remove")
-    public String removeUser(@RequestParam("userId") Long id,Model model){
+    public String removeUser(@RequestParam("userId") Long id, Model model) {
         System.out.println(id);
         User user = userService.findUser(id);
         System.out.println(user.toString());
-       userService.removeUser(user);
-return "redirect:/users";
+        userService.removeUser(user);
+        return "redirect:/users";
     }
+
     @GetMapping("/update")
     public String showUpdateForm(@RequestParam("userId") Long userId, Model model) {
         User user = userService.findUser(userId);
