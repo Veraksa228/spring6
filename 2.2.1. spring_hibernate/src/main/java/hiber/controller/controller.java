@@ -1,7 +1,7 @@
 package hiber.controller;
 
 import hiber.model.User;
-import hiber.service.UserServiceImp;
+import hiber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class controller {
-    UserServiceImp userService;
 
-    @Autowired
-    public void setUserService(UserServiceImp userService) {
-        this.userService = userService;
-    }
+    UserService userService;
+
 
     @GetMapping("/")
     public String index() {
@@ -64,6 +61,11 @@ public class controller {
 
         userService.updateUser(user);
         return "redirect:/users";
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
 }
