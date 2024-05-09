@@ -3,7 +3,6 @@ package hiber.dao;
 
 import hiber.model.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,7 +36,7 @@ public class UserDaoImp implements UserDao {
 
     }
 
-    @Transactional
+
     @Override
     public void updateUser(User updatedUser) {
         if (updatedUser.getId() != null) {

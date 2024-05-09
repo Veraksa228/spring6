@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class controller {
 
-    UserService userService;
+    private UserService userService;
 
+    @Autowired
+    public controller(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String index() {
@@ -61,11 +65,6 @@ public class controller {
 
         userService.updateUser(user);
         return "redirect:/users";
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 
 }
